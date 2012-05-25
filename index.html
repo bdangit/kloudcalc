@@ -16,6 +16,7 @@
     body {
       padding-top: 10px;
       padding-left: 10px;
+      padding-right: 10px;
       padding-bottom: 10px;
     }
   </style>
@@ -34,15 +35,14 @@
 </head>
 
 <body>
-  <button class="btn" id="add-compute-block">Add Compute Block</button>
-  <ul id="infrastructure-list">
-  </ul>
-
-  <section id="infrastructureList">
+  <section id="header">
     <div class="page-header">
       <h1>Kloud Calc</h1>
       <small>simplified calculator to help you estimate the monthly costs of AWS</small>
     </div>
+  </section>
+    
+  <section id="infrastructureList">
     <div class="row">
       <div class="span2">
         <h3>WebServer 1</h3>
@@ -50,7 +50,7 @@
       <div class="span4">
         <div class="btn-toolbar" style="margin-top: 0px;">
           <div class="btn-group">
-            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">t1.micro
+            <button class="btn dropdown-toggle" data-toggle="dropdown">t1.micro
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -73,7 +73,7 @@
             </ul>
           </div><!-- /btn-group -->
           <div class="btn-group">
-            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">US East (Virigina)
+            <button class="btn dropdown-toggle" data-toggle="dropdown">US East (Virigina)
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -94,13 +94,23 @@
         <h3>$100.00</h3>
       </div>
     </div>
-  </section>          
+  </section>
+  
+  <section id="cpanel">          
+    <div class="row">
+      <div class="span12" style="margin-bottom: 20px;margin-top: 10px;">
+        <button class="btn btn-primary" id="add-compute-block">Add Compute Block</button>
+      </div>
+    </div>
+</section>
 
   <!-- Le javascript
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!--<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>-->
   <script src="js/jquery-1.7.2.min.js"></script>
+  <script src="js/underscore-min.js"></script>
+  <script src="js/backbone-min.js"></script>
   <!--<script src="js/google-code-prettify/prettify.js"></script>-->
   <script src="js/bootstrap-transition.js"></script>
   <script src="js/bootstrap-alert.js"></script>
@@ -123,59 +133,24 @@
       // hold computing instance attributes
       name: null,
       instance_size: null, // m1.micro, m1.small, etc.
-      hours_per_month: null
-    });
-
-    /*
-    StorageBlock = Backbone.Model.extend({
-      // hold storage attributes
-      name: null,
-      store_type: null, // ebs, s3
-      space: null, // 10gb 30 gb 50 tb, etc.
-      io_utilization: null // for ebs required IOPs
+      region: null,
+      hours_per_month: null,
+      cost: 0.00
     });
     
-    DBBlock = Backbone.Model.extend({
-      // hold database attributes
-      name: null,
-      db_type: null
-    });
-    
-    ServiceBlock = Backbone.Model.extend({
-      // hold service attributes
-      name: null,
-      service_type: null
-    });
-    */
-    
-    Infrastructure = Backbone.Collection.extend({
+    Inventory = Backbone.Collection.extend({
       initialize: function (models, options) {
-        this.bind("add", options.view.addBlocks);
-        //this.bind("remove", options.view.removeBlocks);
+        this.bind("add", options.view.addBlock);
+        //this.bind("remove", options.view.removeBlock);
       }
     });
-    
-    /*
-    Friend = Backbone.Model.extend({
-      // Create a model to hold friend attribute
-      name: null
-    });
-    
-    Friends = Backbone.Collection.extend({
-      // This is our Friends collection and holds our Friend models
-      initialize: function (models, options) {
-        this.bind("add", options.view.addFriendLi);
-        // Listen for new additions to the collection and call a view function if so
-      }
-    });
-    */
     
     // VIEWS/CONTROLLER!
     // this is really a controller where the HTML is the VIEW
     AppView = Backbone.View.extend({
       el: $("body"),
       initialize: function () {
-        this.infrastructure = new Infrastructure( null, { view: this });
+        this.inventory = new Inventory( null, { view: this });
         // Create an Infrastructure collection when the view is initialized.
         // Pass it a reference to this view to create a connection between the two
       },
@@ -188,11 +163,11 @@
         var compute_name = prompt("Name of Compute Block?");
         var compute_model = new ComputeBlock({ name: compute_name });
         // Add a new friend model to our friend collection
-        this.infrastructure.add( compute_model );
+        this.inventory.add( compute_model );
       },
-      addBlocks: function (model) {
+      addBlock: function (model) {
         // the parameter passed is a reference to the model that was added
-        $("#infrastructure-list").append("<li>" + model.get('name') + "</li>");
+        $("#infrastructureList").append('<div class="row"><div class="span2"><h3>' + model.get('name') + '</h3></div><div class="span4"><h3>' + model.get('instance_size') + '</h3></div><div class="span2"><h3>' + model.get('region') + '</h3></div><div class="span2"><h3>$' + model.get('cost') + '</h3></div></div>');
         // Use .get to receive attributes of the model
       }
     });
