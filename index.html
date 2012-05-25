@@ -1,36 +1,161 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
   <title>I have a back bone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Ben Dang">
+
+  <!-- Le styles -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <!--<link href="css/bootstrap-responsive.css" rel="stylesheet">-->
+  <!--<link href="css/docs.css" rel="stylesheet">-->
+  <!--<link href="js/google-code-prettify/prettify.css" rel="stylesheet">-->
+  <style type="text/css">
+    body {
+      padding-top: 10px;
+      padding-left: 10px;
+      padding-bottom: 10px;
+    }
+  </style>
+
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon" href="ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
 </head>
+
 <body>
-  <button id="add-compute-instance">Add Compute Instance</button>
-  <ul id="friends-list">
+  <button class="btn" id="add-compute-block">Add Compute Block</button>
+  <ul id="infrastructure-list">
   </ul>
-  
-  <!--
-  <script src="http://ajax.googleapis.com/ajx/libs/jquery/1.4.4/jquery.min.js"></script>
-  <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore.js"></script>
-  <script src="http://ajax.cdnjs.com/ajx/libs/backbone.js/0.3.3/backbone-min.js"></script>
-  -->
+
+  <section id="infrastructureList">
+    <div class="page-header">
+      <h1>Kloud Calc</h1>
+      <small>simplified calculator to help you estimate the monthly costs of AWS</small>
+    </div>
+    <div class="row">
+      <div class="span2">
+        <h3>WebServer 1</h3>
+      </div>
+      <div class="span4">
+        <div class="btn-toolbar" style="margin-top: 0px;">
+          <div class="btn-group">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">t1.micro
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">m1.small</a></li>
+              <li><a href="#">m1.medium</a></li>
+              <li><a href="#">m1.large</a></li>
+              <li><a href="#">m1.xlarge</a></li>
+              <li class="divider"></li>
+              <li><a href="#">m2.xlarge</a></li>
+              <li><a href="#">m2.2xlarge</a></li>
+              <li><a href="#">m2.4xlarge</a></li>
+              <li class="divider"></li>
+              <li><a href="#">c1.medium</a></li>
+              <li><a href="#">c1.xlarge</a></li>
+              <li class="divider"></li>
+              <li><a href="#">cc1.4xlarge</a></li>
+              <li><a href="#">cc2.8xlarge</a></li>
+              <li class="divider"></li>
+              <li><a href="#">cg1.4xlarge</a></li>
+            </ul>
+          </div><!-- /btn-group -->
+          <div class="btn-group">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">US East (Virigina)
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#">US West (Oregon)</a></li>
+              <li><a href="#">US West (Northern California)</a></li>
+              <li><a href="#">EU (Ireland)</a></li>
+              <li><a href="#">Asia Pacific (Singapore)</a></li>
+              <li><a href="#">Asia Pacific (Tokyo)</a></li>
+              <li><a href="#">South America (Sao Paulo)</a></li>
+            </ul>
+          </div><!-- /btn-group -->
+        </div>
+      </div>
+      <div class="span2">
+        <h3>730 hrs</h3>
+      </div>
+      <div class="span2">
+        <h3>$100.00</h3>
+      </div>
+    </div>
+  </section>          
+
+  <!-- Le javascript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!--<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>-->
   <script src="js/jquery-1.7.2.min.js"></script>
-  <script src="js/underscore.js"></script>
-  <script src="js/backbone-min.js"></script>
-  
+  <!--<script src="js/google-code-prettify/prettify.js"></script>-->
+  <script src="js/bootstrap-transition.js"></script>
+  <script src="js/bootstrap-alert.js"></script>
+  <script src="js/bootstrap-modal.js"></script>
+  <script src="js/bootstrap-dropdown.js"></script>
+  <script src="js/bootstrap-scrollspy.js"></script>
+  <script src="js/bootstrap-tab.js"></script>
+  <script src="js/bootstrap-tooltip.js"></script>
+  <script src="js/bootstrap-popover.js"></script>
+  <script src="js/bootstrap-button.js"></script>
+  <script src="js/bootstrap-collapse.js"></script>
+  <script src="js/bootstrap-carousel.js"></script>
+  <script src="js/bootstrap-typeahead.js"></script>
+
   <script>
   (function ($) {
     // MODELS!
     // add any data structures here
-    ComputeInstance = Backbone.Model.extend({
+    ComputeBlock = Backbone.Model.extend({
       // hold computing instance attributes
       name: null,
-      cpu_size: null, // 1, 2, 4, 10x
-      disk_size: null, // 10, 20, 30, 40
-      ram_size: null, // 1GB, 2GB, 4GB, 8GB, 16GB, 100GB
-      cloud_vendor: null, // joyent, aws, rackspace, linode
-      software_required: null
+      instance_size: null, // m1.micro, m1.small, etc.
+      hours_per_month: null
     });
-     
+
+    /*
+    StorageBlock = Backbone.Model.extend({
+      // hold storage attributes
+      name: null,
+      store_type: null, // ebs, s3
+      space: null, // 10gb 30 gb 50 tb, etc.
+      io_utilization: null // for ebs required IOPs
+    });
+    
+    DBBlock = Backbone.Model.extend({
+      // hold database attributes
+      name: null,
+      db_type: null
+    });
+    
+    ServiceBlock = Backbone.Model.extend({
+      // hold service attributes
+      name: null,
+      service_type: null
+    });
+    */
+    
+    Infrastructure = Backbone.Collection.extend({
+      initialize: function (models, options) {
+        this.bind("add", options.view.addBlocks);
+        //this.bind("remove", options.view.removeBlocks);
+      }
+    });
+    
+    /*
     Friend = Backbone.Model.extend({
       // Create a model to hold friend attribute
       name: null
@@ -43,30 +168,31 @@
         // Listen for new additions to the collection and call a view function if so
       }
     });
+    */
     
     // VIEWS/CONTROLLER!
     // this is really a controller where the HTML is the VIEW
     AppView = Backbone.View.extend({
       el: $("body"),
       initialize: function () {
-        this.friends = new Friends( null, { view: this });
-        // Create a friends collection when the view is initialized.
+        this.infrastructure = new Infrastructure( null, { view: this });
+        // Create an Infrastructure collection when the view is initialized.
         // Pass it a reference to this view to create a connection between the two
       },
       events: {
-        "click #add-compute-instance":  "showPrompt",
+        "click #add-compute-block":  "showPrompt",
         // this is where you add interaction with the UI (VIEW)
       },
       // this is where you add any of the callback functions / trigger functions
       showPrompt: function () {
-        var friend_name = prompt("Who is your friend?");
-        var friend_model = new Friend({ name: friend_name });
+        var compute_name = prompt("Name of Compute Block?");
+        var compute_model = new ComputeBlock({ name: compute_name });
         // Add a new friend model to our friend collection
-        this.friends.add( friend_model );
+        this.infrastructure.add( compute_model );
       },
-      addFriendLi: function (model) {
+      addBlocks: function (model) {
         // the parameter passed is a reference to the model that was added
-        $("#friends-list").append("<li>" + model.get('name') + "</li>");
+        $("#infrastructure-list").append("<li>" + model.get('name') + "</li>");
         // Use .get to receive attributes of the model
       }
     });
