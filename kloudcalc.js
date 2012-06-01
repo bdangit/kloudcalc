@@ -57,47 +57,29 @@ $(function() {
       this.destroy();
     }
   });
-  var block = new ComputeBlock();
-  block.set({qty: 100});
-  block.set({instance_size: AWS.EC2.T1_MICRO});
-  block.set({hours_per_month: 1000});
-  block.set({region: AWS.REGIONS.AP_SOUTHEAST_1});
-  block.clear();
-  
-  /*
-  var BlockList = Backbone.Collection.extend({
-    model: ComputeBlock,
-    // collection blocks -- for now reference ComputeBlock
-    localStorage: new Store("blocks-backbone"),
-    
-    nextOrder: function() {
-      if (!this.length) return 1;
-      return this.last().get('order') + 1;
-    },
-    
-    comparator: function(block) {
-      return block.get('order');
-    }
-    
-  });
-  var Blocks = new BlockList;
-  */
-  
+  //var block = new ComputeBlock();
+  //block.set({qty: 100});
+  //block.set({instance_size: AWS.EC2.T1_MICRO});
+  //block.set({hours_per_month: 1000});
+  //block.set({region: AWS.REGIONS.AP_SOUTHEAST_1});
+  //block.clear();
+
   // VIEWS!
-  /*
   var BlockView = Backbone.View.extend({
-    tagName: "div",
-    className: "row",
+    //tagName: "div",
+    //classname: "row",
     template: _.template($('#block-template').html()),
     events: {
-      "click a.destroy" : "clear"
+      "click button.destroy" : "clear"
     },
     
-    //initialize: function() {
-    //  this.model.bind('destroy', this.remove, this);
-    //},
+    initialize: function() {
+      //  this.model.bind('destroy', this.remove, this);
+      console.log("creating a new block view");
+    },
     
     render: function() {
+      console.log("rendering a new block view");
       this.$el.html(this.template(this.model.toJSON()));
       return this;
     },
@@ -106,7 +88,6 @@ $(function() {
       this.model.clear();
     }
   });
-  */
   
   var AppView = Backbone.View.extend({
     el: $("#kloudcalc-app"),
@@ -115,10 +96,7 @@ $(function() {
     },
     initialize: function () {
       this.header = this.$("#header");
-      
       this.main = this.$("#main");
-      this.addNewBlock = this.$("#add-compute-block");
-      
       this.footer = this.$("#footer");
     },
     //showPrompt: function () {
@@ -127,10 +105,11 @@ $(function() {
     //  // Add a new friend model to our friend collection
     //  this.inventory.add( compute_model );
     //},
-    addBlock: function (block) {
+    addBlock: function () {
       console.log("adding a new block");
-      //var view = new BlockView({model: block});
-      //this.$("#block-list").append(view.render().el);
+      var block = new ComputeBlock();
+      var view = new BlockView({model: block});
+      this.$("#block-list").append(view.render().el);
     }
   });
   var App = new AppView;

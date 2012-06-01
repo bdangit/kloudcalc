@@ -44,6 +44,7 @@
       
     <section id="main">
       <div id="block-list">
+        <!--
         <div class="row">
           <div class="span1">
             <div class="input-append">
@@ -107,7 +108,8 @@
             </a>
           </div>
         </div>
-      </div>
+        -->
+      </div> <!-- end block-list -->
     </section>
   
     <section id="footer">
@@ -125,7 +127,7 @@
   <script src="js/underscore.js"></script>
   <script src="js/backbone.js"></script>
   <script src="js/backbone-localstorage.js"></script>
-  <script src="js/bootstrap-transition.js"></script>
+  <!--<script src="js/bootstrap-transition.js"></script>-->
   <script src="js/bootstrap-dropdown.js"></script>
   <script src="js/bootstrap-button.js"></script>
   <script src="klouddata.js"></script>
@@ -168,7 +170,7 @@
             </ul>
           </div>
           <div class="btn-group">
-            <button class="btn dropdown-toggle" data-toggle="dropdown">US East (Virigina)
+            <button class="btn dropdown-toggle" data-toggle="dropdown">US East (Virgina)
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -191,9 +193,9 @@
         <h3>$<%= cost %></h3>
       </div>
       <div class="span1">
-        <a class="btn btn-danger destroy" href="#">
+        <button class="btn btn-danger destroy">
           <i class="icon-trash icon-white"></i>
-        </a>
+        </button>
       </div>
     </div>
   </script>
