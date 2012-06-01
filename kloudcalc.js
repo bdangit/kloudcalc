@@ -57,29 +57,22 @@ $(function() {
       this.destroy();
     }
   });
-  //var block = new ComputeBlock();
-  //block.set({qty: 100});
-  //block.set({instance_size: AWS.EC2.T1_MICRO});
-  //block.set({hours_per_month: 1000});
-  //block.set({region: AWS.REGIONS.AP_SOUTHEAST_1});
-  //block.clear();
-
+  
   // VIEWS!
-  var BlockView = Backbone.View.extend({
-    //tagName: "div",
-    //classname: "row",
-    template: _.template($('#block-template').html()),
+  var ComputeBlockView = Backbone.View.extend({
+    model: ComputeBlock,
+    
+    template: _.template($('#compute-block-template').html()),
+    
     events: {
       "click button.destroy" : "clear"
     },
     
     initialize: function() {
-      //  this.model.bind('destroy', this.remove, this);
-      console.log("creating a new block view");
+      this.model.bind('destroy', this.remove, this);
     },
     
     render: function() {
-      console.log("rendering a new block view");
       this.$el.html(this.template(this.model.toJSON()));
       return this;
     },
@@ -91,24 +84,19 @@ $(function() {
   
   var AppView = Backbone.View.extend({
     el: $("#kloudcalc-app"),
+    
     events: {
-      "click #add-compute-block":  "addBlock"
+      "click #add-compute-block":  "addComputeBlock"
     },
+    
     initialize: function () {
       this.header = this.$("#header");
       this.main = this.$("#main");
       this.footer = this.$("#footer");
     },
-    //showPrompt: function () {
-    //  var compute_name = prompt("Name of Compute Block?");
-    //  var compute_model = new ComputeBlock({ name: compute_name });
-    //  // Add a new friend model to our friend collection
-    //  this.inventory.add( compute_model );
-    //},
-    addBlock: function () {
-      console.log("adding a new block");
-      var block = new ComputeBlock();
-      var view = new BlockView({model: block});
+    
+    addComputeBlock: function () {
+      var view = new ComputeBlockView({model: new ComputeBlock()});
       this.$("#block-list").append(view.render().el);
     }
   });
