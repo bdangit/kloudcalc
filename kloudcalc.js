@@ -9,7 +9,7 @@ $(function() {
         os: OS.LINUX,
         region: AWS.REGIONS.US_EAST_1,
         hoursPerMonth: 0,
-        cost: 0.00
+        cost: "0.00"
       };
     },
     
@@ -30,7 +30,9 @@ $(function() {
         var tmp = this.get("instanceSize").LINUX;
         for (var region in tmp) {
           if (this.get("region").index == tmp[region].index) {
-            unit_cost = tmp[region].price;
+            //console.log("region : " + region);
+            unitCost = tmp[region].price;
+            //console.log("calculated unit cost");
             break;
           };
         };
@@ -47,9 +49,9 @@ $(function() {
       };
       
       // store answer
-      this.set({"cost": this.get("qty") * this.get("hoursPerMonth") * unitCost});
-      
-      console.log(this.get("qty") + "x " + this.get("instanceSize").name + " " + this.get("os").name + " " + this.get("region").code + "\t " + this.get("hoursPerMonth") + "\t $" + unitCost.toFixed(3) + " --> $" + this.get("cost").toFixed(2));
+      this.set({"cost": (this.get("qty") * this.get("hoursPerMonth") * unitCost).toFixed(2)});
+      //console.log(this.get("qty") + "x " + this.get("instanceSize").name + " " + this.get("os").name + " " + this.get("region").code + "\t " + this.get("hoursPerMonth") + "\t $" + unitCost.toFixed(3) + " --> $" + this.get("cost"));
+      //console.log(this.toJSON());
     },
     
     clear: function() {
@@ -57,6 +59,10 @@ $(function() {
       this.destroy();
     }
   });
+  //var testBlock1 = new ComputeBlock();
+  //this.testBlock1.calc();
+  //testBlock1.set({"qty":1, "hoursPerMonth":1000});
+  
   
   // VIEWS!
   var ComputeBlockView = Backbone.View.extend({
@@ -69,13 +75,18 @@ $(function() {
     
     events: {
       "click button.destroy" : "clear",
-      "keypress #qty" : "setQty"
+      "keyup #qty" : "setQty",
+      "keyup #hours-per-month" : "setHoursPerMonth"
+    },
+    
+    defaults: function() {
+      return {
+        blockId: 0
+      };
     },
     
     initialize: function() {
-      //this.model.bind('change', this.render, this);
       this.model.bind('destroy', this.remove, this);
-      console.log(this.model.toJSON());
     },
     
     render: function() {
@@ -84,13 +95,31 @@ $(function() {
     },
     
     setQty: function() {
-      var value = this.$("#qty").val();
-      this.model.set({"qty": value});
-      console.log(this.id + " " + value);
+      var value = this.$el.find("#qty").val();
+      this.model.set({"qty": parseInt(value,10)});
+      console.log("qty : " + this.model.get("qty"));
+      this.updateCost();
+    },
+
+    setHoursPerMonth: function() {
+      var value = this.$el.find("#hours-per-month").val();
+      this.model.set({"hoursPerMonth": parseInt(value,10)});
+      console.log("hoursPerMonth : " + this.model.get("hoursPerMonth"));
+      this.updateCost();
+    },
+    
+    updateCost: function() {
+      costField = this.$el.find("#cost");
+      
+      var cost = this.model.get("cost");
+      if (cost == "NaN") {
+        cost = "0.00";
+      }
+      costField.text("$" + cost);
     },
     
     clear: function() {
-      console.log("goodbye server " + this.blockId);
+      console.log("goodbye server " + this.options.blockId);
       this.model.clear();
     }
   });
@@ -107,19 +136,22 @@ $(function() {
     
     initialize: function () {
       this.header = this.$("#header");
+      this.blockList = this.$("#block-list");
       this.main = this.$("#main");
       this.footer = this.$("#footer");
     },
     
     addComputeBlock: function () {
-      console.log("numBlocks:" + this.numBlocks)
+      // create a new ComputeBlockView
       var view = new ComputeBlockView({ 
         model: new ComputeBlock(),
-        id: "#compute-block-" + this.numBlocks,
+        id: "compute-block-" + this.numBlocks,
         blockId: this.numBlocks
       });
       this.numBlocks = this.numBlocks + 1;
-      this.$("#block-list").append(view.render().el);;
+      
+      // add ComputeBlockView to the List
+      this.blockList.append(view.render().el);
     }
   });
   var App = new AppView;
