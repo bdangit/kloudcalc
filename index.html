@@ -70,61 +70,44 @@
   
   <!-- Templates -->
   <script type="text/template" id="compute-block-template">
-    <div class="row">
+      <div class="span8 form-inline">
+        <div class="input-append">
+          <input id="qty" type="text" class="input-mini" value="<%= qty %>"><span class="add-on">x</span>
+        </div>
+        <input type="text" class="input-medium" value="<%= name %>">
+        <select class="input-small">
+          <option>Linux</option>
+          <option>Windows</option>
+        </select>
+        <select class="input-small">
+          <option>t1.micro</option>
+          <option>m1.small</option>
+          <option>m1.medium</option>
+          <option>m1.large</option>
+          <option>m1.xlarge</option>
+          <option>m2.xlarge</option>
+          <option>m2.2xlarge</option>
+          <option>m2.4xlarge</option>
+          <option>c1.medium</option>
+          <option>c1.xlarge</option>
+          <option>cc1.4xlarge</option>
+          <option>cc2.8xlarge</option>
+          <option>cg1.4xlarge</option>
+        </select>
+        <select class="input-medium">
+          <option>US East (Virgina)</option>
+          <option>US West (Oregon)</option>
+          <option>US West (Northern California)</option>
+          <option>EU (Ireland)</option>
+          <option>Asia Pacific (Singapore)</option>
+          <option>Asia Pacific (Tokyo)</option>
+          <option>South America (Sao Paulo)</option>
+        </select>
+        <div class="input-append">
+          <input type="text" class="input-mini" value="<%= hoursPerMonth %>"><span class="add-on">hrs</span>
+        </div>
+      </div>
       <div class="span1">
-        <div class="input-append">
-          <input type="text" style="width: 30px;" value="<%= qty %>"><span class="add-on">x</span>
-        </div>
-      </div>
-      <div class="span2">
-        <input type="text" class="span2" value="<%= name %>">
-      </div>
-      <div class="span4">
-        <div class="btn-toolbar" style="margin-top: 0px;">
-          <div class="btn-group">
-            <button class="btn dropdown-toggle" data-toggle="dropdown">t1.micro
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a href="#">m1.small</a></li>
-              <li><a href="#">m1.medium</a></li>
-              <li><a href="#">m1.large</a></li>
-              <li><a href="#">m1.xlarge</a></li>
-              <li class="divider"></li>
-              <li><a href="#">m2.xlarge</a></li>
-              <li><a href="#">m2.2xlarge</a></li>
-              <li><a href="#">m2.4xlarge</a></li>
-              <li class="divider"></li>
-              <li><a href="#">c1.medium</a></li>
-              <li><a href="#">c1.xlarge</a></li>
-              <li class="divider"></li>
-              <li><a href="#">cc1.4xlarge</a></li>
-              <li><a href="#">cc2.8xlarge</a></li>
-              <li class="divider"></li>
-              <li><a href="#">cg1.4xlarge</a></li>
-            </ul>
-          </div>
-          <div class="btn-group">
-            <button class="btn dropdown-toggle" data-toggle="dropdown">US East (Virgina)
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a href="#">US West (Oregon)</a></li>
-              <li><a href="#">US West (Northern California)</a></li>
-              <li><a href="#">EU (Ireland)</a></li>
-              <li><a href="#">Asia Pacific (Singapore)</a></li>
-              <li><a href="#">Asia Pacific (Tokyo)</a></li>
-              <li><a href="#">South America (Sao Paulo)</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="span2">
-        <div class="input-append">
-          <input type="text" class="span1" value="<%= hours_per_month %>"><span class="add-on">hrs</span>
-        </div>
-      </div>
-      <div class="span2">
         <h3>$<%= cost %></h3>
       </div>
       <div class="span1">
@@ -132,7 +115,6 @@
           <i class="icon-trash icon-white"></i>
         </button>
       </div>
-    </div>
   </script>
 </body>
 </html>
