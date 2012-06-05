@@ -55,7 +55,6 @@ $(function() {
     },
     
     clear: function() {
-      console.log("goodbye " + this.get("name"));
       this.destroy();
     }
   });
@@ -76,6 +75,7 @@ $(function() {
     events: {
       "click button.destroy" : "clear",
       "keyup #qty" : "setQty",
+      "keyup #name" : "setName",
       "keyup #hours-per-month" : "setHoursPerMonth"
     },
     
@@ -96,22 +96,29 @@ $(function() {
     
     setQty: function() {
       var value = this.$el.find("#qty").val();
+      
       this.model.set({"qty": parseInt(value,10)});
-      console.log("qty : " + this.model.get("qty"));
+      //console.log("qty : " + this.model.get("qty"));
       this.updateCost();
+    },
+    
+    setName: function() {
+      var value = this.$el.find("#name").val();
+      this.model.set({"name": value});
     },
 
     setHoursPerMonth: function() {
       var value = this.$el.find("#hours-per-month").val();
+      
       this.model.set({"hoursPerMonth": parseInt(value,10)});
-      console.log("hoursPerMonth : " + this.model.get("hoursPerMonth"));
+      //console.log("hoursPerMonth : " + this.model.get("hoursPerMonth"));
       this.updateCost();
     },
     
     updateCost: function() {
-      costField = this.$el.find("#cost");
-      
+      var costField = this.$el.find("#cost");      
       var cost = this.model.get("cost");
+      
       if (cost == "NaN") {
         cost = "0.00";
       }
@@ -119,7 +126,7 @@ $(function() {
     },
     
     clear: function() {
-      console.log("goodbye server " + this.options.blockId);
+      console.log("[" + this.options.blockId + "] Goodbye " + this.model.get("name") + "!");
       this.model.clear();
     }
   });
