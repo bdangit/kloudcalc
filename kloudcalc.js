@@ -67,7 +67,7 @@ $(function() {
   var ComputeBlockView = Backbone.View.extend({
     model: ComputeBlock,
     tagName: "div",
-    className: "row",
+    className: "row-fluid",
     attributes: {"style":"height: 48px"},
     
     template: _.template($('#compute-block-template').html()),
@@ -77,11 +77,11 @@ $(function() {
       "keyup #qty" : "setQty",
       "keyup #name" : "setName",
       "change #os" : "setOS",
-      "keypress #os" : "setOS",
+      "keyup #os" : "setOS",
       "change #instance-size" : "setInstanceSize",
-      "keypress #instance-size" : "setInstanceSize",
+      "keyup #instance-size" : "setInstanceSize",
       "change #region" : "setRegion",
-      "keypress #region" : "setRegion",
+      "keyup #region" : "setRegion",
       "keyup #hours-per-month" : "setHoursPerMonth"
     },
     
@@ -195,15 +195,23 @@ $(function() {
   var AppView = Backbone.View.extend({
     el: $("#kloudcalc-app"),
     
-    // used to keep track of how many blocks are added to the view
-    numBlocks: 1,
-    
     events: {
-      "click #add-compute-block":  "addComputeBlock"
+      "click #add-compute-block":  "addComputeBlock",
+      "keyup '#block-list,#cost'": "updateTotalCost",
+      "click '#block-list,#cost'": "updateTotalCost",
+      "click '#block-list,button.destroy'": "updateTotalCost"
+    },
+   
+    defaults: function() {
+      return {
+        // used to keep track of how many blocks are added to the view
+        numBlocks: 1,
+      };
     },
     
     initialize: function () {
       this.header = this.$("#header");
+      this.totalCostField = this.$("#total-cost");
       this.blockList = this.$("#block-list");
       this.main = this.$("#main");
       this.footer = this.$("#footer");
@@ -220,6 +228,17 @@ $(function() {
       
       // add ComputeBlockView to the List
       this.blockList.append(view.render().el);
+    },
+    
+    updateTotalCost: function () {
+      var totalCost = 0.00;
+      // extract all costs
+      this.$("#cost").each(function (index) {
+        totalCost = totalCost + parseFloat( ($(this).text()).split("$")[1] );
+      });
+      
+      // update total cost
+      this.totalCostField.text("$" + totalCost.toFixed(2));
     }
   });
   var App = new AppView;

@@ -9,15 +9,7 @@
 
   <!-- styles -->
   <link href="css/bootstrap.css" rel="stylesheet">
-  <style type="text/css">
-    body {
-      padding-top: 10px;
-      padding-left: 10px;
-      padding-right: 10px;
-      padding-bottom: 10px;
-    }
-  </style>
-
+  
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -34,11 +26,16 @@
 </head>
 
 <body>
-  <div id="kloudcalc-app">
+  <div id="kloudcalc-app" class="container">
     <section id="header">
-      <div class="page-header">
-        <h1>Kloud Calc</h1>
-        <small>simple calculator to help you estimate the monthly costs of AWS</small>
+      <div class="page-header row-fluid">
+        <div class="span10">
+          <h1>Kloud Calc</h1>
+          <small>simple calculator to help you estimate the monthly costs of AWS</small>
+        </div>
+        <div class="span2" style="text-align: right">
+          <h1 id="total-cost">$0.00</h1><h6>per month</h6>
+        </div>
       </div>
     </section>
       
@@ -55,6 +52,7 @@
       </div>
     </section>
   </div>
+</div><!-- end container -->
   
   <!-- javascript -->
   <script src="js/json2.js"></script>
@@ -66,9 +64,9 @@
   
   <!-- Templates -->
   <script type="text/template" id="compute-block-template">
-      <div class="span8 form-inline">
+      <div class="span10 form-inline">
         <div class="input-append">
-          <input id="qty" type="text" class="span1" value="<%= qty %>"><span class="add-on">x</span>
+          <input id="qty" type="text" class="input-mini" value="<%= qty %>"><span class="add-on">x</span>
         </div>
         <input id="name" type="text" class="input-medium" value="<%= name %>">
         <select id="os" class="input-small">
@@ -103,10 +101,10 @@
           <input id="hours-per-month" type="text" class="input-mini" value="<%= hoursPerMonth %>"><span class="add-on">hrs</span>
         </div>
       </div>
-      <div class="span1">
+      <div class="span1" style="text-align: right">
         <h3 id="cost">$<%= cost %></h3>
       </div>
-      <div class="span1">
+      <div class="span1" style="text-align: right">
         <button class="btn btn-danger destroy">
           <i class="icon-trash icon-white"></i>
         </button>
