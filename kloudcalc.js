@@ -5,10 +5,10 @@ $(function() {
       return {
         qty: 0,
         name: "Server",
-        instanceSize: AWS.EC2.M1_SMALL,
+        instanceSize: AWS.EC2.T1_MICRO,
         os: OS.LINUX,
         region: AWS.REGIONS.US_EAST_1,
-        hoursPerMonth: 0,
+        hoursPerMonth: 730,
         cost: "0.00"
       };
     },
@@ -76,6 +76,12 @@ $(function() {
       "click button.destroy" : "clear",
       "keyup #qty" : "setQty",
       "keyup #name" : "setName",
+      "change #os" : "setOS",
+      "keypress #os" : "setOS",
+      "change #instance-size" : "setInstanceSize",
+      "keypress #instance-size" : "setInstanceSize",
+      "change #region" : "setRegion",
+      "keypress #region" : "setRegion",
       "keyup #hours-per-month" : "setHoursPerMonth"
     },
     
@@ -95,20 +101,75 @@ $(function() {
     },
     
     setQty: function() {
-      var value = this.$el.find("#qty").val();
+      // get current value
+      var value = this.$("#qty").val();
       
+      // save it to model as int
       this.model.set({"qty": parseInt(value,10)});
       //console.log("qty : " + this.model.get("qty"));
+      
       this.updateCost();
     },
     
     setName: function() {
-      var value = this.$el.find("#name").val();
+      // get current value
+      var value = this.$("#name").val();
+      
+      // save it to model
       this.model.set({"name": value});
+    },
+    
+    setOS: function() {
+      // get current value
+      var value = this.$("#os").val();
+      
+      // iterate to find what OS it is
+      // if found store it
+      if (value == "Linux") {
+        this.model.set({"os": OS.LINUX});
+      } else if (value == "Windows") {
+        this.model.set({"os": OS.WIN});
+      } else {
+        console.log("can't find OS");
+      }
+      
+      this.updateCost();
+    },
+    
+    setInstanceSize: function() {
+      // get current value
+      var value = this.$("#instance-size").val();
+      
+      // iterate through AWS dictionary to find the size
+      // if found store it
+      for (sz in AWS.EC2) {
+        if (value == AWS.EC2[sz].name) {
+          this.model.set({"instanceSize": AWS.EC2[sz]});
+          break;
+        }
+      }
+      
+      this.updateCost();
+    },
+
+    setRegion: function() {
+      // get current value
+      var value = this.$("#region").val();
+      
+      // iterate through AWS dictionary to find the size
+      // if found store it
+      for (region in AWS.REGIONS) {
+        if (value == AWS.REGIONS[region].name) {
+          this.model.set({"region": AWS.REGIONS[region]});
+          break;
+        }
+      }
+      
+      this.updateCost();
     },
 
     setHoursPerMonth: function() {
-      var value = this.$el.find("#hours-per-month").val();
+      var value = this.$("#hours-per-month").val();
       
       this.model.set({"hoursPerMonth": parseInt(value,10)});
       //console.log("hoursPerMonth : " + this.model.get("hoursPerMonth"));
@@ -116,7 +177,7 @@ $(function() {
     },
     
     updateCost: function() {
-      var costField = this.$el.find("#cost");      
+      var costField = this.$("#cost");      
       var cost = this.model.get("cost");
       
       if (cost == "NaN") {

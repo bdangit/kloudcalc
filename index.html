@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>I have a back bone</title>
+  <title>Kloud Calc</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
+  <meta name="description" content="simple calculator to help you estimate the monthly costs of your AWS cloud.  Rackspace, Joyent and many others are coming soon.">
   <meta name="author" content="Ben Dang">
 
   <!-- styles -->
@@ -61,10 +61,6 @@
   <script src="js/jquery-1.7.2.min.js"></script>
   <script src="js/underscore.js"></script>
   <script src="js/backbone.js"></script>
-  <script src="js/backbone-localstorage.js"></script>
-  <!--<script src="js/bootstrap-transition.js"></script>-->
-  <script src="js/bootstrap-dropdown.js"></script>
-  <script src="js/bootstrap-button.js"></script>
   <script src="klouddata.js"></script>
   <script src="kloudcalc.js"></script>
   
@@ -72,14 +68,14 @@
   <script type="text/template" id="compute-block-template">
       <div class="span8 form-inline">
         <div class="input-append">
-          <input id="qty" type="text" class="input-mini" value="<%= qty %>"><span class="add-on">x</span>
+          <input id="qty" type="text" class="span1" value="<%= qty %>"><span class="add-on">x</span>
         </div>
         <input id="name" type="text" class="input-medium" value="<%= name %>">
-        <select class="input-small">
-          <option>Linux</option>
-          <option>Windows</option>
+        <select id="os" class="input-small">
+          <option value="Linux">Linux</option>
+          <option value="Windows">Windows</option>
         </select>
-        <select class="input-small">
+        <select id="instance-size" class="input-small">
           <option>t1.micro</option>
           <option>m1.small</option>
           <option>m1.medium</option>
@@ -94,7 +90,7 @@
           <option>cc2.8xlarge</option>
           <option>cg1.4xlarge</option>
         </select>
-        <select class="input-medium">
+        <select id="region" class="input-medium">
           <option>US East (Virgina)</option>
           <option>US West (Oregon)</option>
           <option>US West (Northern California)</option>
