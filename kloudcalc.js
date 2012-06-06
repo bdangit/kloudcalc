@@ -68,7 +68,7 @@ $(function() {
     model: ComputeBlock,
     tagName: "div",
     className: "row-fluid",
-    attributes: {"style":"height: 48px"},
+    attributes: {"style":"margin-bottom: 20px"},
     
     template: _.template($('#compute-block-template').html()),
     
