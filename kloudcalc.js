@@ -5,7 +5,7 @@ $(function() {
       return {
         qty: 0,
         name: "Server",
-        instanceSize: AWS.EC2.T1_MICRO,
+        instanceSize: AWS.COMPUTE.EC2.T1_MICRO,
         os: OS.LINUX,
         region: AWS.REGIONS.US_EAST_1,
         hoursPerMonth: 730,
@@ -142,9 +142,9 @@ $(function() {
       
       // iterate through AWS dictionary to find the size
       // if found store it
-      for (sz in AWS.EC2) {
-        if (value == AWS.EC2[sz].name) {
-          this.model.set({"instanceSize": AWS.EC2[sz]});
+      for (sz in AWS.COMPUTE.EC2) {
+        if (value == AWS.COMPUTE.EC2[sz].name) {
+          this.model.set({"instanceSize": AWS.COMPUTE.EC2[sz]});
           break;
         }
       }
@@ -199,6 +199,7 @@ $(function() {
       "click #add-compute-block":  "addComputeBlock",
       "keyup '#block-list,#cost'": "updateTotalCost",
       "click '#block-list,#cost'": "updateTotalCost",
+      "change '#block-list,#cost'": "updateTotalCost",
       "click '#block-list,button.destroy'": "updateTotalCost"
     },
    
