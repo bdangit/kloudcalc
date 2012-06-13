@@ -62,6 +62,32 @@ $(function() {
   //this.testBlock1.calc();
   //testBlock1.set({"qty":1, "hoursPerMonth":1000});
   
+  var StorageBlock = Backbone.Model.extend({
+    defaults: function() {
+      return {
+        qty: 0,
+        name: "Data Volume",
+        size: 1, // gb
+        vendor: VENDORS.AWS,
+        region: AWS.REGIONS.US_EAST_1,
+        cost: "0.00"
+      };
+    }
+  });
+  
+  var AWSEBSStorageBlock = StorageBlock.extend({
+    defaults: function() {
+      return {
+        ioRequests: 10  // million (light 10, medium 100, heavy 500, very heavy 1000)
+                        //          storing of data, anything dependent on reading/writing 
+                        //          databases          
+      };
+    }
+  });
+  
+  var testBlock2 = new AWSEBSStorageBlock();
+  console.log(testBlock2);
+  
   
   // VIEWS!
   var ComputeBlockView = Backbone.View.extend({

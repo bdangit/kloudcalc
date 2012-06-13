@@ -7,6 +7,13 @@ var OS = {
   },
 };
 
+var VENDORS = {
+  AWS : {
+    name : "Amazon Web Services",
+    code : "AWS"
+  },
+};
+
 var AWS = {
   TIMESTAMP : "2012-05-31 2341 PST", // should be UNIX based timestamp
   REGIONS : {
