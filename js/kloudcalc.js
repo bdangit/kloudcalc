@@ -84,9 +84,8 @@ $(function() {
       };
     }
   });
-  
-  var testBlock2 = new AWSEBSStorageBlock();
-  console.log(testBlock2);
+  //var testBlock2 = new AWSEBSStorageBlock();
+  //console.log(testBlock2);
   
   
   // VIEWS!
