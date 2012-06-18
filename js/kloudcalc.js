@@ -3,13 +3,13 @@ $(function() {
   var ComputeBlock = Backbone.Model.extend({
     defaults: function() {
       return {
-        qty: 0,
-        name: "Server",
-        instanceSize: AWS.COMPUTE.EC2.T1_MICRO,
-        os: OS.LINUX,
-        region: AWS.REGIONS.US_EAST_1,
-        hoursPerMonth: 730,
-        cost: "0.00"
+        "qty": 0,
+        "name": "Server",
+        "instanceSize": AWS.COMPUTE.EC2.T1_MICRO,
+        "os": OS.LINUX,
+        "region": AWS.REGIONS.US_EAST_1,
+        "hoursPerMonth": 730,
+        "cost": "0.00"
       };
     },
     
@@ -94,6 +94,7 @@ $(function() {
     tagName: "div",
     className: "row-fluid",
     attributes: {"style":"margin-bottom: 20px"},
+    blockId: 0,
     
     template: _.template($('#compute-block-template').html()),
     
@@ -110,13 +111,11 @@ $(function() {
       "keyup #hours-per-month" : "setHoursPerMonth"
     },
     
-    defaults: function() {
-      return {
-        blockId: 0
-      };
-    },
-    
     initialize: function() {
+      if (this.options.blockId) {
+        this.blockId = this.options.blockId;
+      }
+      
       this.model.bind('destroy', this.remove, this);
     },
     
@@ -212,13 +211,16 @@ $(function() {
     },
     
     clear: function() {
-      console.log("[" + this.options.blockId + "] Goodbye " + this.model.get("name") + "!");
+      console.log("[" + this.blockId + "] Goodbye " + this.model.get("name") + "!");
       this.model.clear();
     }
   });
   
   var AppView = Backbone.View.extend({
     el: $("#kloudcalc-app"),
+    
+    // used to keep track of how many blocks are added to the view
+    numBlocks: 1,    
     
     events: {
       "click #add-compute-block":  "addComputeBlock",
@@ -227,20 +229,17 @@ $(function() {
       "change '#block-list,#cost'": "updateTotalCost",
       "click '#block-list,button.destroy'": "updateTotalCost"
     },
-   
-    defaults: function() {
-      return {
-        // used to keep track of how many blocks are added to the view
-        numBlocks: 1,
-      };
-    },
     
     initialize: function () {
+      if (this.options.numBlocks) {
+        this.numBlocks = this.options.numBlocks;
+      }
+    
       this.header = this.$("#header");
       this.totalCostField = this.$("#total-cost");
       this.blockList = this.$("#block-list");
       this.main = this.$("#main");
-      this.footer = this.$("#footer");
+      this.footer = this.$("footer");
     },
     
     addComputeBlock: function () {
@@ -251,6 +250,7 @@ $(function() {
         blockId: this.numBlocks
       });
       this.numBlocks = this.numBlocks + 1;
+      console.log("numBlocks: " + this.numBlocks);
       
       // add ComputeBlockView to the List
       this.blockList.append(view.render().el);
@@ -267,6 +267,6 @@ $(function() {
       this.totalCostField.text("$" + totalCost.toFixed(2));
     }
   });
-  var App = new AppView;
+  var App = new AppView();
   
 });
