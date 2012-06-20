@@ -30,9 +30,7 @@ $(function() {
         var tmp = this.get("instanceSize").LINUX;
         for (var region in tmp) {
           if (this.get("region").index == tmp[region].index) {
-            //console.log("region : " + region);
             unitCost = tmp[region].price;
-            //console.log("calculated unit cost");
             break;
           };
         };
@@ -50,8 +48,8 @@ $(function() {
       
       // store answer
       this.set({"cost": (this.get("qty") * this.get("hoursPerMonth") * unitCost).toFixed(2)});
-      //console.log(this.get("qty") + "x " + this.get("instanceSize").name + " " + this.get("os").name + " " + this.get("region").code + "\t " + this.get("hoursPerMonth") + "\t $" + unitCost.toFixed(3) + " --> $" + this.get("cost"));
-      //console.log(this.toJSON());
+//console.log(this.get("qty") + "x " + this.get("instanceSize").name + " " + this.get("os").name + " " + this.get("region").code + "\t " + this.get("hoursPerMonth") + "\t $" + unitCost.toFixed(3) + " --> $" + this.get("cost"));
+//console.log(this.toJSON());
     },
     
     clear: function() {
@@ -92,7 +90,7 @@ $(function() {
   var ComputeBlockView = Backbone.View.extend({
     model: ComputeBlock,
     tagName: "div",
-    className: "row-fluid",
+    className: "row",
     attributes: {"style":"margin-bottom: 20px"},
     blockId: 0,
     
@@ -130,7 +128,7 @@ $(function() {
       
       // save it to model as int
       this.model.set({"qty": parseInt(value,10)});
-      //console.log("qty : " + this.model.get("qty"));
+//console.log("qty : " + this.model.get("qty"));
       
       this.updateCost();
     },
@@ -196,7 +194,7 @@ $(function() {
       var value = this.$("#hours-per-month").val();
       
       this.model.set({"hoursPerMonth": parseInt(value,10)});
-      //console.log("hoursPerMonth : " + this.model.get("hoursPerMonth"));
+//console.log("hoursPerMonth : " + this.model.get("hoursPerMonth"));
       this.updateCost();
     },
     
@@ -249,8 +247,8 @@ $(function() {
         id: "compute-block-" + this.numBlocks,
         blockId: this.numBlocks
       });
+      //console.log("numBlocks: " + this.numBlocks);
       this.numBlocks = this.numBlocks + 1;
-      console.log("numBlocks: " + this.numBlocks);
       
       // add ComputeBlockView to the List
       this.blockList.append(view.render().el);

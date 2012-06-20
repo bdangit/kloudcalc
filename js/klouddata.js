@@ -18,30 +18,37 @@ var AWS = {
   TIMESTAMP : "2012-05-31 2341 PST", // should be UNIX based timestamp
   REGIONS : {
     US_EAST_1 : {
+      index: 1,
       name: "US East (Virgina)",
       code: "US_EAST_1"
     },
     US_WEST_1 : {
+      index: 2,
       name: "US West (Oregon)",
       code: "US_WEST_1"
     },
     US_WEST_2 : {
+      index: 3,
       name: "US West (Northern California)",
       code: "US_WEST_2"
     },
     EU_WEST_1 : {
+      index: 4,
       name: "EU (Ireland)",
       code: "EU_WEST_1"
     },
     AP_SOUTHEAST_1 : {
+      index: 5,
       name: "Asia Pacific (Singapore)",
       code: "AP_SOUTHEAST_1"
     },
     AP_NORTHEAST_1 : {
+      index: 6,
       name: "Asia Pacific (Tokyo)",
       code: "AP_NORTHEAST_1"
     },
     SA_EAST_1 : {
+      index: 7,
       name: "South America (Sao Paulo)",
       code: "SA_EAST_1"
     }
