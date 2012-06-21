@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Kloud Calc v0.1</title>
+  <title>Kloud Calc v0.2</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="simple calculator to help you estimate the monthly costs of your AWS cloud.  Rackspace, Joyent and many others are coming soon.">
   <meta name="author" content="Ben Dang">
@@ -37,28 +37,38 @@
   </script>
 </head>
 
-<body>
-  <div id="kloudcalc-app" class="container">
-    <div id="header" class="page-header">
-      <div class="row">
-        <div class="span6">
-          <h1>Kloud Calc</h1>
-          <small>simple calculator to help you estimate the monthly costs of AWS</small>
-        </div>  
-        <div class="span6" style="text-align: right">
-          <h1 id="total-cost">$0.00</h1> <h6>per month</h6>
+<body style="margin-top: 80px;">
+  <div id="kloudcalc-app">
+    <div id="header" class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <div class="row">
+            <div class="span5">
+              <div class="brand"><strong>Kloud Calc</strong>
+                <h5><small>simple calculator to help you estimate the monthly costs of AWS</small></h5>
+              </div>
+            </div>
+            <div class="span7">
+              <div class="brand" style="text-align: right; float: right;">
+                <div id="total-cost">$0.00</div>
+                <h5><small>per month</small></h5>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
       
     <div id="main">
-      <div id="block-list">
+      <div id="block-list" class="container">
       </div>
     </div>
   
     <footer>
-      <div style="margin-bottom: 20px;margin-top: 10px;">
-        <button class="btn btn-primary" id="add-compute-block">Add Compute Block</button>
+      <div class="container" style="margin-top: 5px;">
+        <button class="btn btn-primary btn-small" id="add-compute-block">Add Compute Block</button>
+        <button class="btn disabled btn-small" id="add-storage-block" disabled>Add Storage Block</button>
+        <button class="btn disabled btn-small" id="add-service-block" disabled>Add Services Block</button>
       </div>
     </footer>
   </div><!-- end kloudcalc-app -->
@@ -66,9 +76,10 @@
   <!-- javascript -->
   <script src="js/libs/json/json2.js"></script>
   <script src="js/libs/jquery/jquery-1.7.2.min.js"></script>
-  <script src="js/libs/underscore/underscore-1.3.3.min.js"></script>
-  <script src="js/libs/backbone/backbone-0.9.2.min.js"></script>
-  <script src="js/kloudcalc.min.js"></script>
+  <script src="js/libs/underscore/underscore-1.3.3.js"></script>
+  <script src="js/libs/backbone/backbone-0.9.2.js"></script>
+  <script src="js/klouddata.js"></script>
+  <script src="js/kloudcalc.js"></script>
   
   <!-- Templates -->
   <script type="text/template" id="compute-block-template">
@@ -109,11 +120,11 @@
           <input id="hours-per-month" type="text" class="input-mini" value="<%= hoursPerMonth %>"><span class="add-on">hrs</span>
         </div>
       </div>
-      <div class="span1" style="text-align: right">
-        <h3 id="cost">$<%= cost %></h3>
+      <div class="span1">
+        <h4 id="cost" style="line-height:28px; text-align: right;">$<%= cost %></h4>
       </div>
-      <div class="span1" style="text-align: right">
-        <button class="btn btn-danger destroy">
+      <div class="span1" style="text-align: center">
+        <button class="btn btn-danger btn-small destroy">
           <i class="icon-trash icon-white"></i>
         </button>
       </div>
