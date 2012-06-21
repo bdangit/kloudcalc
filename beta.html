@@ -39,18 +39,23 @@
   -->
 </head>
 
-<body style="margin-top: 100px;">
+<body style="margin-top: 80px;">
   <div id="kloudcalc-app">
     <div id="header" class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <div class="brand pull-left">
-            <h1>Kloud Calc</h1>
-            <small>simple calculator to help you estimate the monthly costs of AWS</small>
-          </div>
-          <div class="brand pull-right">
-            <h1 id="total-cost">$0.00</h1>
-            <small>per month</small>
+          <div class="row">
+            <div class="span5">
+              <div class="brand"><strong>Kloud Calc</strong>
+                <h5><small>simple calculator to help you estimate the monthly costs of AWS</small></h5>
+              </div>
+            </div>
+            <div class="span7">
+              <div class="brand" style="text-align: right; float: right;">
+                <div id="total-cost">$0.00</div>
+                <h5><small>per month</small></h5>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -62,8 +67,10 @@
     </div>
   
     <footer>
-      <div class="container" style="margin-bottom: 20px;margin-top: 10px;">
-        <button class="btn btn-primary" id="add-compute-block">Add Compute Block</button>
+      <div class="container" style="margin-top: 5px;">
+        <button class="btn btn-primary btn-small" id="add-compute-block">Add Compute Block</button>
+        <button class="btn disabled btn-small" id="add-storage-block" disabled>Add Storage Block</button>
+        <button class="btn disabled btn-small" id="add-service-block" disabled>Add Services Block</button>
       </div>
     </footer>
   </div><!-- end kloudcalc-app -->
@@ -115,11 +122,11 @@
           <input id="hours-per-month" type="text" class="input-mini" value="<%= hoursPerMonth %>"><span class="add-on">hrs</span>
         </div>
       </div>
-      <div class="span1" style="text-align: right">
-        <h3 id="cost">$<%= cost %></h3>
+      <div class="span1">
+        <h4 id="cost" style="line-height:28px; text-align: right;">$<%= cost %></h4>
       </div>
-      <div class="span1" style="text-align: right">
-        <button class="btn btn-danger destroy">
+      <div class="span1" style="text-align: center">
+        <button class="btn btn-danger btn-small destroy">
           <i class="icon-trash icon-white"></i>
         </button>
       </div>
