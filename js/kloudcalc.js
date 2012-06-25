@@ -3,7 +3,7 @@ $(function() {
   var ComputeBlock = Backbone.Model.extend({
     defaults: function() {
       return {
-        "qty": 0,
+        "qty": 1,
         "name": "Server",
         "instanceSize": AWS.COMPUTE.EC2.T1_MICRO,
         "os": OS.LINUX,
@@ -63,7 +63,7 @@ $(function() {
   var StorageBlock = Backbone.Model.extend({
     defaults: function() {
       return {
-        qty: 0,
+        qty: 1,
         name: "Data Volume",
         size: 1, // gb
         vendor: VENDORS.AWS,
@@ -118,6 +118,7 @@ $(function() {
     },
     
     render: function() {
+      this.model.calc();
       this.$el.html(this.template(this.model.toJSON()));
       return this;
     },
@@ -252,6 +253,9 @@ $(function() {
       
       // add ComputeBlockView to the List
       this.blockList.append(view.render().el);
+      
+      // make sure to update the total cost
+      this.updateTotalCost();
     },
     
     updateTotalCost: function () {
