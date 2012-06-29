@@ -61,16 +61,24 @@ $(function() {
   //testBlock1.set({"qty":1, "hoursPerMonth":1000});
   
   var StorageBlock = Backbone.Model.extend({
-    defaults: function() {
-      return {
-        qty: 1,
-        name: "Data Volume",
-        size: 1, // gb
-        vendor: VENDORS.AWS,
-        region: AWS.REGIONS.US_EAST_1,
-        cost: "0.00"
-      };
-    }
+    qty: 1,
+    name: "Data Volume",
+    size: 20, // gb
+    vendor: VENDORS.AWS,
+    region: AWS.REGIONS.US_EAST_1,
+    cost: "0.00"
+    
+    //
+    //defaults: function() {
+    //  return {
+    //    qty: 1,
+    //    name: "Data Volume",
+    //    size: 1, // gb
+    //    vendor: VENDORS.AWS,
+    //    region: AWS.REGIONS.US_EAST_1,
+    //    cost: "0.00"
+    //  };
+    //}
   });
   
   var AWSEBSStorageBlock = StorageBlock.extend({
@@ -82,8 +90,9 @@ $(function() {
       };
     }
   });
-  //var testBlock2 = new AWSEBSStorageBlock();
-  //console.log(testBlock2);
+  var testBlock2 = new AWSEBSStorageBlock();
+  console.log(testBlock2);
+  console.log(testBlock2 instanceof StorageBlock);
   
   
   // VIEWS!

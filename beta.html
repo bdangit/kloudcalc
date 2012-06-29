@@ -63,6 +63,74 @@
       
     <div id="main">
       <div id="block-list" class="container">
+      
+        <div class="span10 form-inline">
+          <div class="input-append">
+            <input id="qty" type="text" class="input-mini" value="<%= qty %>"><span class="add-on">x</span>
+          </div>
+          <input id="name" type="text" class="input-medium" value="<%= name %>">
+          <select id="store-type" class="input-mini">
+            <option value="EBS">EBS</option>
+          </select>
+          <div class="input-append">
+            <input id="instance-size" type="text" class="input-mini" value="<%= size %>"><span class="add-on">gb</span>
+          </div>
+          <select id="region" class="input-medium">
+            <option>US East (Virgina)</option>
+            <option>US West (Oregon)</option>
+            <option>US West (Northern California)</option>
+            <option>EU (Ireland)</option>
+            <option>Asia Pacific (Singapore)</option>
+            <option>Asia Pacific (Tokyo)</option>
+            <option>South America (Sao Paulo)</option>
+          </select>
+          <select id="io-requests" class="input-medium">
+            <option value="10">light IO usage (< 10 mil)</option>
+            <option value="100">medium IO usage (< 100 mil)</option>
+            <option value="500">heavy IO (< 500 mil)</option>
+            <option value="1000">very heavy IO (< 1000 mil)</option>
+            <option value="100000">insane amounts of IO (< 100000 mil)</option>
+          </select>
+        </div>
+        <div class="span2" style="text-align: right;">
+          <strong id="cost" style="line-height:28px;">$<%= cost %></strong>
+          &nbsp;
+          <button class="btn btn-danger destroy">&times;</button>
+        </div>
+      
+      <div class="span10 form-inline">
+          <div class="input-append">
+            <input id="qty" type="text" class="input-mini" value="<%= qty %>"><span class="add-on">x</span>
+          </div>
+          <input id="name" type="text" class="input-medium" value="<%= name %>">
+          <select id="store-type" class="input-mini">
+            <option value="S3">S3</option>
+          </select>
+          <div class="input-append">
+            <input id="instance-size" type="text" class="input-mini" value="<%= size %>"><span class="add-on">gb</span>
+          </div>
+          <select id="region" class="input-medium">
+            <option>US East (Virgina)</option>
+            <option>US West (Oregon)</option>
+            <option>US West (Northern California)</option>
+            <option>EU (Ireland)</option>
+            <option>Asia Pacific (Singapore)</option>
+            <option>Asia Pacific (Tokyo)</option>
+            <option>South America (Sao Paulo)</option>
+          </select>
+          <div class="input-append">
+            <input id="data-in" type="text" class="input-mini" value="<%= size %>"><span class="add-on">gb in</span>
+          </div>
+          <div class="input-append">
+            <input id="data-out" type="text" class="input-miniz " value="<%= size %>"><span class="add-on">gb out</span>
+          </div>
+        </div>
+        <div class="span2" style="text-align: right;">
+          <strong id="cost" style="line-height:28px;">$<%= cost %></strong>
+          &nbsp;
+          <button class="btn btn-danger destroy">&times;</button>
+        </div>
+      
       </div>
     </div>
   
