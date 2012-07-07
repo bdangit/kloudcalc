@@ -76,8 +76,8 @@
 @btnPrimaryBackground:              @linkColor;
 @btnPrimaryBackgroundHighlight:     spin(@btnPrimaryBackground, 15%);
 
-@btnInfoBackground:                 #5bc0de;
-@btnInfoBackgroundHighlight:        #2f96b4;
+@btnInfoBackground:                 #3A87AD; //#5bc0de;
+@btnInfoBackgroundHighlight:        #4E93B5; // #2f96b4;
 
 @btnSuccessBackground:              #62c462;
 @btnSuccessBackgroundHighlight:     #51a351;
@@ -91,6 +91,8 @@
 @btnInverseBackground:              @gray;
 @btnInverseBackgroundHighlight:     @grayDarker;
 
+@btnOptionsBackground:              @grayLight;
+@btnOptionsBackgroundHighlight:     #A3A3A3;
 
 // Forms
 // -------------------------
@@ -193,11 +195,11 @@
 // GRID
 // --------------------------------------------------
 
-// Default 940px grid
+// Default 768 // 940px grid
 // -------------------------
-@gridColumns:             12;
-@gridColumnWidth:         60px;
-@gridGutterWidth:         10px;
+@gridColumns:             20;   //16;    // 12;
+@gridColumnWidth:         30px; // 40px; // 60px;
+@gridGutterWidth:         8px;           // 20px; 
 @gridRowWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
 
 // Fluid grid
