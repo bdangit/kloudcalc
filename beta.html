@@ -9,12 +9,6 @@
 
   <!-- styles -->
   <link href="css/bootstrap.css" rel="stylesheet">
-  <style type="text/css">
-    body {
-      margin-top: 80px;
-    }
-  </style>
-  <link href="css/bootstrap-responsive.css" rel="stylesheet">
   
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
@@ -47,155 +41,146 @@
 
 <body>
   <div id="kloudcalc-app">
-    <div id="header" class="navbar navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <div class="brand">Kloud Calc
-            <h5><small>simple calculator to help you estimate the monthly costs of AWS</small></h5>
-          </div>
-          <div class="brand" style="text-align: right; float: right;">
-            <div id="total-cost">$0.00</div>
-            <h5><small>per month</small></h5>
+          <div class="row">
+            <div class="span13">
+              <div class="brand"><strong>Kloud Calc</strong>
+                simple calculator to help you estimate the monthly costs of your cloud
+              </div>
+              </h6>
+            </div>
+            <div class="span7" style="text-align: right;">
+              <h3 id="total-cost" style="text-align: right; line-height: 55px; float: right">$0.00 <small>/ month</small></h3>
+            </div>
           </div>
         </div>
       </div>
     </div>
-      
-    <div id="main">
-      <div id="block-list" class="container">
-      
-        <div class="span10 form-inline">
-          <div class="input-append">
-            <input id="qty" type="text" class="input-mini" value="<%= qty %>"><span class="add-on">x</span>
+
+    <div class="container" style="margin-top: 80px;">
+      <section id="block-list">
+      </section>
+
+      <section id="control-panel">
+        <div class="row" style="margin-bottom: 10px; margin-top: 10px;">
+          <div class="span15">
+            <button class="btn btn-primary btn-small" id="add-compute-block">Add Compute Block</button>
+            <button class="btn btn-primary btn-small" id="add-storage-block">Add Storage Block</button>
           </div>
-          <input id="name" type="text" class="input-medium" value="<%= name %>">
-          <select id="store-type" class="input-mini">
-            <option value="EBS">EBS</option>
-          </select>
-          <div class="input-append">
-            <input id="instance-size" type="text" class="input-mini" value="<%= size %>"><span class="add-on">gb</span>
-          </div>
-          <select id="region" class="input-medium">
-            <option>US East (Virgina)</option>
-            <option>US West (Oregon)</option>
-            <option>US West (Northern California)</option>
-            <option>EU (Ireland)</option>
-            <option>Asia Pacific (Singapore)</option>
-            <option>Asia Pacific (Tokyo)</option>
-            <option>South America (Sao Paulo)</option>
-          </select>
-          <select id="io-requests" class="input-medium">
-            <option value="10">light IO usage (< 10 mil)</option>
-            <option value="100">medium IO usage (< 100 mil)</option>
-            <option value="500">heavy IO (< 500 mil)</option>
-            <option value="1000">very heavy IO (< 1000 mil)</option>
-            <option value="100000">insane amounts of IO (< 100000 mil)</option>
-          </select>
-        </div>
-        <div class="span2" style="text-align: right;">
-          <strong id="cost" style="line-height:28px;">$<%= cost %></strong>
-          &nbsp;
-          <button class="btn btn-danger destroy">&times;</button>
-        </div>
-      
-      <div class="span10 form-inline">
-          <div class="input-append">
-            <input id="qty" type="text" class="input-mini" value="<%= qty %>"><span class="add-on">x</span>
-          </div>
-          <input id="name" type="text" class="input-medium" value="<%= name %>">
-          <select id="store-type" class="input-mini">
-            <option value="S3">S3</option>
-          </select>
-          <div class="input-append">
-            <input id="instance-size" type="text" class="input-mini" value="<%= size %>"><span class="add-on">gb</span>
-          </div>
-          <select id="region" class="input-medium">
-            <option>US East (Virgina)</option>
-            <option>US West (Oregon)</option>
-            <option>US West (Northern California)</option>
-            <option>EU (Ireland)</option>
-            <option>Asia Pacific (Singapore)</option>
-            <option>Asia Pacific (Tokyo)</option>
-            <option>South America (Sao Paulo)</option>
-          </select>
-          <div class="input-append">
-            <input id="data-in" type="text" class="input-mini" value="<%= size %>"><span class="add-on">gb in</span>
-          </div>
-          <div class="input-append">
-            <input id="data-out" type="text" class="input-miniz " value="<%= size %>"><span class="add-on">gb out</span>
+          <div class="span5" style="text-align: right; line-height: 28px;">
+            <small>Created by <a href="mailto:me@bdang.it">Ben Dang</a></small>
           </div>
         </div>
-        <div class="span2" style="text-align: right;">
-          <strong id="cost" style="line-height:28px;">$<%= cost %></strong>
-          &nbsp;
-          <button class="btn btn-danger destroy">&times;</button>
-        </div>
-      
-      </div>
+      </section>
     </div>
-  
-    <footer>
-      <div class="container" style="margin-bottom: 20px; margin-top: 5px;">
-        <button class="btn btn-primary btn-small" id="add-compute-block">Add Compute Block</button>
-        <button class="btn disabled btn-small" id="add-storage-block" disabled>Add Storage Block</button>
-        <button class="btn disabled btn-small" id="add-service-block" disabled>Add Services Block</button>
-      </div>
-    </footer>
+
   </div><!-- end kloudcalc-app -->
-  
   <!-- javascript -->
   <script src="js/libs/json/json2.js"></script>
   <script src="js/libs/jquery/jquery-1.7.2.min.js"></script>
   <script src="js/libs/underscore/underscore-1.3.3.js"></script>
   <script src="js/libs/backbone/backbone-0.9.2.js"></script>
   <script src="js/libs/bootstrap/bootstrap-collapse.js"></script>
+  <script src="js/libs/bootstrap/bootstrap-dropdown.js"></script>
+  <script src="js/libs/bootstrap/bootstrap-select2dropdown.js"></script>
   <script src="js/klouddata.js"></script>
   <script src="js/kloudcalc.js"></script>
   
   <!-- Templates -->
   <script type="text/template" id="compute-block-template">
-      <div class="span10 form-inline">
-        <div class="input-append">
-          <input id="qty" type="text" class="input-mini" value="<%= qty %>"><span class="add-on">x</span>
-        </div>
-        <input id="name" type="text" class="input-medium" value="<%= name %>">
-        <select id="os" class="input-small">
-          <option value="Linux">Linux</option>
-          <option value="Windows">Windows</option>
-        </select>
-        <select id="instance-size" class="input-small">
-          <option>t1.micro</option>
-          <option>m1.small</option>
-          <option>m1.medium</option>
-          <option>m1.large</option>
-          <option>m1.xlarge</option>
-          <option>m2.xlarge</option>
-          <option>m2.2xlarge</option>
-          <option>m2.4xlarge</option>
-          <option>c1.medium</option>
-          <option>c1.xlarge</option>
-          <option>cc1.4xlarge</option>
-          <option>cc2.8xlarge</option>
-          <option>cg1.4xlarge</option>
-        </select>
-        <select id="region" class="input-medium">
-          <option>US East (Virgina)</option>
-          <option>US West (Oregon)</option>
-          <option>US West (Northern California)</option>
-          <option>EU (Ireland)</option>
-          <option>Asia Pacific (Singapore)</option>
-          <option>Asia Pacific (Tokyo)</option>
-          <option>South America (Sao Paulo)</option>
-        </select>
-        <div class="input-append">
-          <input id="hours-per-month" type="text" class="input-mini" value="<%= hoursPerMonth %>"><span class="add-on">hrs</span>
-        </div>
-      </div>
-      <div class="span2" style="text-align: right;">
-        <strong id="cost" style="line-height:28px;">$<%= cost %></strong>
-        &nbsp;
-        <button class="btn btn-danger destroy">&times;</button>
-      </div>
+          <div class="span20">
+            <div class="row">
+              <div class="span20">
+                <h6><small>compute block</small></h6>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="span15 form-inline">
+                <div class="input-append">
+                  <input id="qty" class="span1" type="text" style="text-align: right" value="<%= qty %>"><span class="add-on">x</span>
+                </div>
+                <input id="name" class="span5" type="text" value="<%= name %>">
+                <div class="input-append">
+                  <input id="hours-per-month" class="span2" type="text" style="text-align: right" value="<%= hoursPerMonth %>" ><span class="add-on">hrs</span>
+                </div>
+              </div>
+
+              <div class="span5" style="text-align: right;">
+                <strong id="cost"><%= cost %></strong> <small>/ month</small>
+                &nbsp;
+                <button class="btn btn-danger destroy">
+                  <i class="icon-trash icon-white"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="span20" style="margin-top: 5px;">
+                <div class="btn-toolbar">
+                  <!-- Vendor.Service -->
+                  <select id="vendor-service" data-class="btn-info btn-mini">
+                    <option>AWS.EC2</option>
+                    <!--
+                    <option>Rackspace.Flavors</option>
+                    <option>Joyent.SmartMachines</option>
+                    <option>Azure.Virtual Machines</option>
+                    <option>Linode.Linodes</option>
+                    -->
+                  </select>
+
+                  <!-- AWS Region -->
+                  <select id="region" data-class="btn-options btn-mini">
+                    <option value="us-east-1">US East (Virgina)</option>
+                    <option value="us-west-1">US West (Oregon)</option>
+                    <option value=" us-west-2">US West (Northern California)</option>
+                    <option value="eu-east-1">EU (Ireland)</option>
+                    <option value="ap-southeast-1">Asia Pacific (Singapore)</option>
+                    <option value="ap-northeast-1">Asia Pacific (Tokyo)</option>
+                    <option value="sa-east-1">South America (Sao Paulo)</option>
+                  </select>
+
+                  <!-- AWS Size -->
+                  <select id="instance-size" data-class="btn-options btn-mini">
+                    <option>t1.micro</option>
+                    <option>m1.small</option>
+                    <option>m1.medium</option>
+                    <option>m1.large</option>
+                    <option>m1.xlarge</option>
+                    <option>m2.xlarge</option>
+                    <option>m2.2xlarge</option>
+                    <option>m2.4xlarge</option>
+                    <option>c1.medium</option>
+                    <option>c1.xlarge</option>
+                    <option>cc1.4xlarge</option>
+                    <option>cc2.8xlarge</option>
+                    <option>cg1.4xlarge</option>
+                  </select>
+
+                  <!-- OS -->
+                  <select id="os" data-class="btn-options btn-mini">
+                    <option>Linux</option>
+                    <option>Windows</option>
+                  </select>
+
+                  <!-- outgoing -->
+                  <select id="outgoing" data-class="btn-options btn-mini">
+                    <option value="1">light outgoing traffic (< 1 GB)</option>
+                    <li value="10">medium outgoing traffic(< 10 GB)</option>
+                    <option value="50">heavy outgoing traffic (< 50 GB)</option>
+                    <option value="1000">very heavy outgoing traffic (< 1 TB)</option>
+                    <option value="1000000">insane outgoing traffic (< 1 PB)</option>
+                  </select>
+                </div><!-- end btn-toolbar -->
+              </div>
+            </div>
+
+            <div class="row">
+              <hr>
+            </div>
+          </div>
   </script>
 </body>
 </html>
