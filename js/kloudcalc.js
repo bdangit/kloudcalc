@@ -1,9 +1,16 @@
+/*!
+ * Kloud Calc
+ * copyright (c) 2012 by Ben Dang <me@bdang.it>
+ * all rights reserved
+ */
+
 $(function() {
-  // MODELS!
+  // MODELS --------------------------------------------------------------------
   var ComputeBlock = Backbone.Model.extend({
     defaults: function() {
       return {
         "qty": 1,
+        "vendorService": AWS.EC2,
         "name": "Server",
         "instanceSize": AWS.COMPUTE.EC2.T1_MICRO,
         "os": OS.LINUX,
@@ -48,59 +55,69 @@ $(function() {
       
       // store answer
       this.set({"cost": (this.get("qty") * this.get("hoursPerMonth") * unitCost).toFixed(2)});
-//console.log(this.get("qty") + "x " + this.get("instanceSize").name + " " + this.get("os").name + " " + this.get("region").code + "\t " + this.get("hoursPerMonth") + "\t $" + unitCost.toFixed(3) + " --> $" + this.get("cost"));
-//console.log(this.toJSON());
     },
     
     clear: function() {
       this.destroy();
     }
   });
-  //var testBlock1 = new ComputeBlock();
-  //this.testBlock1.calc();
-  //testBlock1.set({"qty":1, "hoursPerMonth":1000});
   
   var StorageBlock = Backbone.Model.extend({
     qty: 1,
+    vendorService: AWS.EBS,
     name: "Data Volume",
     size: 20, // gb
-    vendor: VENDORS.AWS,
     region: AWS.REGIONS.US_EAST_1,
-    cost: "0.00"
+    cost: "0.00",
+  
+    initialize: function() {
+      this.bind("change:qty", function() { this.calc(); });
+      this.bind("change:vendorService", function() { this.calc(); });
+      this.bind("change:size", function() { this.calc(); });
+      this.bind("change:region", function() { this.calc(); });
+    },
     
-    //
-    //defaults: function() {
-    //  return {
-    //    qty: 1,
-    //    name: "Data Volume",
-    //    size: 1, // gb
-    //    vendor: VENDORS.AWS,
-    //    region: AWS.REGIONS.US_EAST_1,
-    //    cost: "0.00"
-    //  };
-    //}
-  });
-  
-  var AWSEBSStorageBlock = StorageBlock.extend({
-    defaults: function() {
-      return {
-        ioRequests: 10  // million (light 10, medium 100, heavy 500, very heavy 1000)
-                        //          storing of data, anything dependent on reading/writing 
-                        //          databases          
+    calc: function() {
+      // lookup hourly cost by instance_size and region
+      var unitCost = 0.000;
+      
+      // schema VENDOR.SERVICE.SIZE.OS.REGION
+      if (this.get("os") == OS.LINUX) {
+        var tmp = this.get("instanceSize").LINUX;
+        for (var region in tmp) {
+          if (this.get("region").index == tmp[region].index) {
+            unitCost = tmp[region].price;
+            break;
+          };
+        };
+      } else if (this.get("os") == OS.WIN) {
+        var tmp = this.get("instanceSize").WIN;
+        for (var region in tmp) {
+          if (this.get("region").index == tmp[region].index) {
+            unitCost = tmp[region].price;
+            break;
+          };
+        };
+      } else {
+        console.log("can't find OS");
       };
+      
+      // store answer
+      this.set({"cost": (this.get("qty") * this.get("hoursPerMonth") * unitCost).toFixed(2)});
+    },
+    
+    clear: function() {
+      this.destroy();
     }
+
   });
-  var testBlock2 = new AWSEBSStorageBlock();
-  console.log(testBlock2);
-  console.log(testBlock2 instanceof StorageBlock);
   
-  
-  // VIEWS!
+  // VIEWS ---------------------------------------------------------------------
   var ComputeBlockView = Backbone.View.extend({
     model: ComputeBlock,
     tagName: "div",
     className: "row",
-    attributes: {"style":"margin-bottom: 20px"},
+    attributes: {"style":"margin-top: 0px"},
     blockId: 0,
     
     template: _.template($('#compute-block-template').html()),
@@ -129,6 +146,9 @@ $(function() {
     render: function() {
       this.model.calc();
       this.$el.html(this.template(this.model.toJSON()));
+      this.$('select').each(function(index){ 
+        $(this).convert2dropdown(index); 
+      });
       return this;
     },
     
@@ -246,7 +266,6 @@ $(function() {
       this.header = this.$("#header");
       this.totalCostField = this.$("#total-cost");
       this.blockList = this.$("#block-list");
-      this.main = this.$("#main");
       this.footer = this.$("footer");
     },
     
@@ -275,7 +294,7 @@ $(function() {
       });
       
       // update total cost
-      this.totalCostField.text("$" + totalCost.toFixed(2));
+      this.totalCostField.html("$" + totalCost.toFixed(2) + " <small>/ month</small>");
     }
   });
   var App = new AppView();

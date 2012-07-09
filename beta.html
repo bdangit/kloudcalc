@@ -41,7 +41,7 @@
 
 <body>
   <div id="kloudcalc-app">
-    <div class="navbar navbar-fixed-top">
+    <div id="header" class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <div class="row">
@@ -109,7 +109,7 @@
               </div>
 
               <div class="span5" style="text-align: right;">
-                <strong id="cost"><%= cost %></strong> <small>/ month</small>
+                <strong id="cost">$<%= cost %></strong> <small>/ month</small>
                 &nbsp;
                 <button class="btn btn-danger destroy">
                   <i class="icon-trash icon-white"></i>
@@ -122,7 +122,7 @@
                 <div class="btn-toolbar">
                   <!-- Vendor.Service -->
                   <select id="vendor-service" data-class="btn-info btn-mini">
-                    <option>AWS.EC2</option>
+                    <option selected>AWS.EC2</option>
                     <!--
                     <option>Rackspace.Flavors</option>
                     <option>Joyent.SmartMachines</option>
@@ -133,9 +133,9 @@
 
                   <!-- AWS Region -->
                   <select id="region" data-class="btn-options btn-mini">
-                    <option value="us-east-1">US East (Virgina)</option>
+                    <option value="us-east-1" selected>US East (Virgina)</option>
                     <option value="us-west-1">US West (Oregon)</option>
-                    <option value=" us-west-2">US West (Northern California)</option>
+                    <option value="us-west-2">US West (Northern California)</option>
                     <option value="eu-east-1">EU (Ireland)</option>
                     <option value="ap-southeast-1">Asia Pacific (Singapore)</option>
                     <option value="ap-northeast-1">Asia Pacific (Tokyo)</option>
@@ -144,7 +144,7 @@
 
                   <!-- AWS Size -->
                   <select id="instance-size" data-class="btn-options btn-mini">
-                    <option>t1.micro</option>
+                    <option selected>t1.micro</option>
                     <option>m1.small</option>
                     <option>m1.medium</option>
                     <option>m1.large</option>
@@ -161,13 +161,13 @@
 
                   <!-- OS -->
                   <select id="os" data-class="btn-options btn-mini">
-                    <option>Linux</option>
+                    <option selected>Linux</option>
                     <option>Windows</option>
                   </select>
 
                   <!-- outgoing -->
                   <select id="outgoing" data-class="btn-options btn-mini">
-                    <option value="1">light outgoing traffic (< 1 GB)</option>
+                    <option value="1" selected>light outgoing traffic (< 1 GB)</option>
                     <li value="10">medium outgoing traffic(< 10 GB)</option>
                     <option value="50">heavy outgoing traffic (< 50 GB)</option>
                     <option value="1000">very heavy outgoing traffic (< 1 TB)</option>
