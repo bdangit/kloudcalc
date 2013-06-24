@@ -133,10 +133,10 @@ $ ->
         changeOptions: ->
             @delOptions()
 
-            # grab selected category
+            # grab selected category ### HERE
             @selectedOptions = @optionGroups.where({
-                name: @categoryView.selectedLabel
-                })[0].get 'dropdowns'
+                name: @categoryView.selectedLabel[0]
+            })[0].get 'dropdowns'
 
             @renderOptions()
 
