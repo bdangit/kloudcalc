@@ -52,7 +52,7 @@ class app.DropdownView extends Backbone.View
         # prep labels
         @labelViews = []
         @labels ?= @options.labels
-        @selectedLabel = ''
+        @selectedLabel = { name: '', value: '' }
 
         # establish the first selected label
         if @labels.where({selected: 1}).length is 0
@@ -85,13 +85,14 @@ class app.DropdownView extends Backbone.View
 
         if labelRef.length is 1
             # found a label
-            @selectedLabel = labelRef[0].get "name"
-            selectedLabelData = labelRef[0].get "value"
-            if selectedLabelData is "not specified"
-                selectedLabelData = @selectedLabel
+            @selectedLabel.name = labelRef[0].get "name"
+            @selectedLabel.value = labelRef[0].get "value"
+            if @selectedLabel.value is "not specified"
+                @selectedLabel.value = @selectedLabel.name
 
-            @selectedEl.text @selectedLabel
-            @selectedEl.data "value", selectedLabelData
+            @selectedEl.text @selectedLabel.name
+            # 20120828 deprecated in next go around 
+            @selectedEl.data "value", @selectedLabel.value
 
             labelRef[0].set {selected: 0}
 
