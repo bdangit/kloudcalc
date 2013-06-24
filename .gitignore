@@ -1,0 +1,8 @@
+.DS_Store
+
+# editor files
+*.espressostorage
+*.sublime-*
+
+# app folder since it is compiled
+app/*.js
